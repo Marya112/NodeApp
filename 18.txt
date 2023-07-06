@@ -1,0 +1,629 @@
+How to use streams in Node.js
+Mar 6th, 2022
+|
+Categories:
+
+Node.js
+Streams of data serve as a bridge between where data is stored and where it will be processed. Node.js streams are used to read and continuously write data. Streams work differently from traditional techniques that read or write data, which require the data to be read and stored in memory before being processed. For instance, to read a file, the entire file needs to be copied into memory before it can be processed adding to application latency. On the other hand, applications that use streams will read a file sequentially in chunks, where each of these chunks is processed one at a time.
+Streams provide memory efficiency and performance benefits. For example, the performance of a website that leverages streaming is better than websites that load whole files before enabling users to use them. With streams, data can be loaded on demand depending on what users need.
+This guide will explore streams in Node.js, look at how they work, and provide examples of readable and writable streams.
+What are streams?
+Streams are a fundamental component of some of the most important Node.js applications. Using streams, large data sets are divided up into smaller chunks, which are then processed one at a time, one by one. This eliminates the need to read data from storage into memory before processing it. Many libraries used in Node.js support non-blocking execution, where chunks of data are streamed as they are received.
+In Node.js, four streams are typically used:
+Readable streams are used in operations where data is read, such as reading data from a file or streaming video.
+Writable streams are used in operations where data is written, such as writing or updating data to a file.
+Duplex streams can be used to perform both read and write operations. A typical example of a duplex stream is a socket, which can be used for two-way communication, such as in a real-time chat app.
+Transform streams are duplex streams that perform transformations on the data being processed. Operations such as compression and extraction use transform streams.
+Streams offer the following advantages over working with entire sets of data:
+Efficient memory usage - With streams, large amounts of data do not need to be loaded into memory, reducing the number of reads and write cycles required to perform operations.
+Better performance - With streams, there is higher data processing throughput since data is processed as soon as it becomes available rather than waiting for all the data to arrive and then process it.
+Increased composability - With streams, developers can compose complex applications that interconnect data between multiple pieces of code or even across applications. This benefit allows developers to build microservices with Node.js.
+Real-time applications - Streams are essential for creating real-time applications such as video streaming or chat applications.
+How to create a readable stream
+In this section, we will look at creating a readable stream. First, let’s look at a simple example. We can start working with streams using the ‘streams’ module, a core module in Node.js. To create a readable stream, first, import the ‘stream’ module and then create an instance of the readable stream by adding the following:
+const Stream = require('stream')
+const readableStream = new Stream.Readable()
+Once the readable stream is initialized, we can send data using:
+readableStream.push('Hello World!')
+There are two types of read streams: flowing and paused.
+In flowing mode, data is read continuously and provided to the application using events from the EventEmitter. These events include
+Data event - This event is raised whenever data is available to be read by a stream.
+End event - This event is raised when the stream reaches the end of the file, and no more data is available to read.
+Error event - This event is raised when an error occurs during the read stream process. This event is also raised when using writable streams.
+Finish event - This event is raised when all data has been flushed to the underlying system.
+With the paused mode, the stream is not read continuously. Instead, the read() method of the readable stream needs to be called explicitly to receive the next chunk of data from the stream.
+Streams start out in the paused mode but can be switched to the flowing mode by following these steps:
+How to use streams in Node.js
+Mar 6th, 2022
+|
+Categories:
+
+Node.js
+Streams of data serve as a bridge between where data is stored and where it will be processed. Node.js streams are used to read and continuously write data. Streams work differently from traditional techniques that read or write data, which require the data to be read and stored in memory before being processed. For instance, to read a file, the entire file needs to be copied into memory before it can be processed adding to application latency. On the other hand, applications that use streams will read a file sequentially in chunks, where each of these chunks is processed one at a time.
+Streams provide memory efficiency and performance benefits. For example, the performance of a website that leverages streaming is better than websites that load whole files before enabling users to use them. With streams, data can be loaded on demand depending on what users need.
+This guide will explore streams in Node.js, look at how they work, and provide examples of readable and writable streams.
+What are streams?
+Streams are a fundamental component of some of the most important Node.js applications. Using streams, large data sets are divided up into smaller chunks, which are then processed one at a time, one by one. This eliminates the need to read data from storage into memory before processing it. Many libraries used in Node.js support non-blocking execution, where chunks of data are streamed as they are received.
+In Node.js, four streams are typically used:
+Readable streams are used in operations where data is read, such as reading data from a file or streaming video.
+Writable streams are used in operations where data is written, such as writing or updating data to a file.
+Duplex streams can be used to perform both read and write operations. A typical example of a duplex stream is a socket, which can be used for two-way communication, such as in a real-time chat app.
+Transform streams are duplex streams that perform transformations on the data being processed. Operations such as compression and extraction use transform streams.
+Streams offer the following advantages over working with entire sets of data:
+Efficient memory usage - With streams, large amounts of data do not need to be loaded into memory, reducing the number of reads and write cycles required to perform operations.
+Better performance - With streams, there is higher data processing throughput since data is processed as soon as it becomes available rather than waiting for all the data to arrive and then process it.
+Increased composability - With streams, developers can compose complex applications that interconnect data between multiple pieces of code or even across applications. This benefit allows developers to build microservices with Node.js.
+Real-time applications - Streams are essential for creating real-time applications such as video streaming or chat applications.
+How to create a readable stream
+In this section, we will look at creating a readable stream. First, let’s look at a simple example. We can start working with streams using the ‘streams’ module, a core module in Node.js. To create a readable stream, first, import the ‘stream’ module and then create an instance of the readable stream by adding the following:
+const Stream = require('stream')
+const readableStream = new Stream.Readable()
+Once the readable stream is initialized, we can send data using:
+readableStream.push('Hello World!')
+There are two types of read streams: flowing and paused.
+In flowing mode, data is read continuously and provided to the application using events from the EventEmitter. These events include
+Data event - This event is raised whenever data is available to be read by a stream.
+End event - This event is raised when the stream reaches the end of the file, and no more data is available to read.
+Error event - This event is raised when an error occurs during the read stream process. This event is also raised when using writable streams.
+Finish event - This event is raised when all data has been flushed to the underlying system.
+With the paused mode, the stream is not read continuously. Instead, the read() method of the readable stream needs to be called explicitly to receive the next chunk of data from the stream.
+Streams start out in the paused mode but can be switched to the flowing mode by following these steps:
+
+
+How to use streams in Node.js
+Mar 6th, 2022
+|
+Categories:
+
+Node.js
+Streams of data serve as a bridge between where data is stored and where it will be processed. Node.js streams are used to read and continuously write data. Streams work differently from traditional techniques that read or write data, which require the data to be read and stored in memory before being processed. For instance, to read a file, the entire file needs to be copied into memory before it can be processed adding to application latency. On the other hand, applications that use streams will read a file sequentially in chunks, where each of these chunks is processed one at a time.
+Streams provide memory efficiency and performance benefits. For example, the performance of a website that leverages streaming is better than websites that load whole files before enabling users to use them. With streams, data can be loaded on demand depending on what users need.
+This guide will explore streams in Node.js, look at how they work, and provide examples of readable and writable streams.
+What are streams?
+Streams are a fundamental component of some of the most important Node.js applications. Using streams, large data sets are divided up into smaller chunks, which are then processed one at a time, one by one. This eliminates the need to read data from storage into memory before processing it. Many libraries used in Node.js support non-blocking execution, where chunks of data are streamed as they are received.
+In Node.js, four streams are typically used:
+Readable streams are used in operations where data is read, such as reading data from a file or streaming video.
+Writable streams are used in operations where data is written, such as writing or updating data to a file.
+Duplex streams can be used to perform both read and write operations. A typical example of a duplex stream is a socket, which can be used for two-way communication, such as in a real-time chat app.
+Transform streams are duplex streams that perform transformations on the data being processed. Operations such as compression and extraction use transform streams.
+Streams offer the following advantages over working with entire sets of data:
+Efficient memory usage - With streams, large amounts of data do not need to be loaded into memory, reducing the number of reads and write cycles required to perform operations.
+Better performance - With streams, there is higher data processing throughput since data is processed as soon as it becomes available rather than waiting for all the data to arrive and then process it.
+Increased composability - With streams, developers can compose complex applications that interconnect data between multiple pieces of code or even across applications. This benefit allows developers to build microservices with Node.js.
+Real-time applications - Streams are essential for creating real-time applications such as video streaming or chat applications.
+How to create a readable stream
+In this section, we will look at creating a readable stream. First, let’s look at a simple example. We can start working with streams using the ‘streams’ module, a core module in Node.js. To create a readable stream, first, import the ‘stream’ module and then create an instance of the readable stream by adding the following:
+const Stream = require('stream')
+const readableStream = new Stream.Readable()
+Once the readable stream is initialized, we can send data using:
+readableStream.push('Hello World!')
+There are two types of read streams: flowing and paused.
+In flowing mode, data is read continuously and provided to the application using events from the EventEmitter. These events include
+Data event - This event is raised whenever data is available to be read by a stream.
+End event - This event is raised when the stream reaches the end of the file, and no more data is available to read.
+Error event - This event is raised when an error occurs during the read stream process. This event is also raised when using writable streams.
+Finish event - This event is raised when all data has been flushed to the underlying system.
+With the paused mode, the stream is not read continuously. Instead, the read() method of the readable stream needs to be called explicitly to receive the next chunk of data from the stream.
+Streams start out in the paused mode but can be switched to the flowing mode by following these steps:
+
+
+How to use streams in Node.js
+Mar 6th, 2022
+|
+Categories:
+
+Node.js
+Streams of data serve as a bridge between where data is stored and where it will be processed. Node.js streams are used to read and continuously write data. Streams work differently from traditional techniques that read or write data, which require the data to be read and stored in memory before being processed. For instance, to read a file, the entire file needs to be copied into memory before it can be processed adding to application latency. On the other hand, applications that use streams will read a file sequentially in chunks, where each of these chunks is processed one at a time.
+Streams provide memory efficiency and performance benefits. For example, the performance of a website that leverages streaming is better than websites that load whole files before enabling users to use them. With streams, data can be loaded on demand depending on what users need.
+This guide will explore streams in Node.js, look at how they work, and provide examples of readable and writable streams.
+What are streams?
+Streams are a fundamental component of some of the most important Node.js applications. Using streams, large data sets are divided up into smaller chunks, which are then processed one at a time, one by one. This eliminates the need to read data from storage into memory before processing it. Many libraries used in Node.js support non-blocking execution, where chunks of data are streamed as they are received.
+In Node.js, four streams are typically used:
+Readable streams are used in operations where data is read, such as reading data from a file or streaming video.
+Writable streams are used in operations where data is written, such as writing or updating data to a file.
+Duplex streams can be used to perform both read and write operations. A typical example of a duplex stream is a socket, which can be used for two-way communication, such as in a real-time chat app.
+Transform streams are duplex streams that perform transformations on the data being processed. Operations such as compression and extraction use transform streams.
+Streams offer the following advantages over working with entire sets of data:
+Efficient memory usage - With streams, large amounts of data do not need to be loaded into memory, reducing the number of reads and write cycles required to perform operations.
+Better performance - With streams, there is higher data processing throughput since data is processed as soon as it becomes available rather than waiting for all the data to arrive and then process it.
+Increased composability - With streams, developers can compose complex applications that interconnect data between multiple pieces of code or even across applications. This benefit allows developers to build microservices with Node.js.
+Real-time applications - Streams are essential for creating real-time applications such as video streaming or chat applications.
+How to create a readable stream
+In this section, we will look at creating a readable stream. First, let’s look at a simple example. We can start working with streams using the ‘streams’ module, a core module in Node.js. To create a readable stream, first, import the ‘stream’ module and then create an instance of the readable stream by adding the following:
+const Stream = require('stream')
+const readableStream = new Stream.Readable()
+Once the readable stream is initialized, we can send data using:
+readableStream.push('Hello World!')
+There are two types of read streams: flowing and paused.
+In flowing mode, data is read continuously and provided to the application using events from the EventEmitter. These events include
+Data event - This event is raised whenever data is available to be read by a stream.
+End event - This event is raised when the stream reaches the end of the file, and no more data is available to read.
+Error event - This event is raised when an error occurs during the read stream process. This event is also raised when using writable streams.
+Finish event - This event is raised when all data has been flushed to the underlying system.
+With the paused mode, the stream is not read continuously. Instead, the read() method of the readable stream needs to be called explicitly to receive the next chunk of data from the stream.
+Streams start out in the paused mode but can be switched to the flowing mode by following these steps:
+
+
+How to use streams in Node.js
+Mar 6th, 2022
+|
+Categories:
+
+Node.js
+Streams of data serve as a bridge between where data is stored and where it will be processed. Node.js streams are used to read and continuously write data. Streams work differently from traditional techniques that read or write data, which require the data to be read and stored in memory before being processed. For instance, to read a file, the entire file needs to be copied into memory before it can be processed adding to application latency. On the other hand, applications that use streams will read a file sequentially in chunks, where each of these chunks is processed one at a time.
+Streams provide memory efficiency and performance benefits. For example, the performance of a website that leverages streaming is better than websites that load whole files before enabling users to use them. With streams, data can be loaded on demand depending on what users need.
+This guide will explore streams in Node.js, look at how they work, and provide examples of readable and writable streams.
+What are streams?
+Streams are a fundamental component of some of the most important Node.js applications. Using streams, large data sets are divided up into smaller chunks, which are then processed one at a time, one by one. This eliminates the need to read data from storage into memory before processing it. Many libraries used in Node.js support non-blocking execution, where chunks of data are streamed as they are received.
+In Node.js, four streams are typically used:
+Readable streams are used in operations where data is read, such as reading data from a file or streaming video.
+Writable streams are used in operations where data is written, such as writing or updating data to a file.
+Duplex streams can be used to perform both read and write operations. A typical example of a duplex stream is a socket, which can be used for two-way communication, such as in a real-time chat app.
+Transform streams are duplex streams that perform transformations on the data being processed. Operations such as compression and extraction use transform streams.
+Streams offer the following advantages over working with entire sets of data:
+Efficient memory usage - With streams, large amounts of data do not need to be loaded into memory, reducing the number of reads and write cycles required to perform operations.
+Better performance - With streams, there is higher data processing throughput since data is processed as soon as it becomes available rather than waiting for all the data to arrive and then process it.
+Increased composability - With streams, developers can compose complex applications that interconnect data between multiple pieces of code or even across applications. This benefit allows developers to build microservices with Node.js.
+Real-time applications - Streams are essential for creating real-time applications such as video streaming or chat applications.
+How to create a readable stream
+In this section, we will look at creating a readable stream. First, let’s look at a simple example. We can start working with streams using the ‘streams’ module, a core module in Node.js. To create a readable stream, first, import the ‘stream’ module and then create an instance of the readable stream by adding the following:
+const Stream = require('stream')
+const readableStream = new Stream.Readable()
+Once the readable stream is initialized, we can send data using:
+readableStream.push('Hello World!')
+There are two types of read streams: flowing and paused.
+In flowing mode, data is read continuously and provided to the application using events from the EventEmitter. These events include
+Data event - This event is raised whenever data is available to be read by a stream.
+End event - This event is raised when the stream reaches the end of the file, and no more data is available to read.
+Error event - This event is raised when an error occurs during the read stream process. This event is also raised when using writable streams.
+Finish event - This event is raised when all data has been flushed to the underlying system.
+With the paused mode, the stream is not read continuously. Instead, the read() method of the readable stream needs to be called explicitly to receive the next chunk of data from the stream.
+Streams start out in the paused mode but can be switched to the flowing mode by following these steps:
+
+
+How to use streams in Node.js
+Mar 6th, 2022
+|
+Categories:
+
+Node.js
+Streams of data serve as a bridge between where data is stored and where it will be processed. Node.js streams are used to read and continuously write data. Streams work differently from traditional techniques that read or write data, which require the data to be read and stored in memory before being processed. For instance, to read a file, the entire file needs to be copied into memory before it can be processed adding to application latency. On the other hand, applications that use streams will read a file sequentially in chunks, where each of these chunks is processed one at a time.
+Streams provide memory efficiency and performance benefits. For example, the performance of a website that leverages streaming is better than websites that load whole files before enabling users to use them. With streams, data can be loaded on demand depending on what users need.
+This guide will explore streams in Node.js, look at how they work, and provide examples of readable and writable streams.
+What are streams?
+Streams are a fundamental component of some of the most important Node.js applications. Using streams, large data sets are divided up into smaller chunks, which are then processed one at a time, one by one. This eliminates the need to read data from storage into memory before processing it. Many libraries used in Node.js support non-blocking execution, where chunks of data are streamed as they are received.
+In Node.js, four streams are typically used:
+Readable streams are used in operations where data is read, such as reading data from a file or streaming video.
+Writable streams are used in operations where data is written, such as writing or updating data to a file.
+Duplex streams can be used to perform both read and write operations. A typical example of a duplex stream is a socket, which can be used for two-way communication, such as in a real-time chat app.
+Transform streams are duplex streams that perform transformations on the data being processed. Operations such as compression and extraction use transform streams.
+Streams offer the following advantages over working with entire sets of data:
+Efficient memory usage - With streams, large amounts of data do not need to be loaded into memory, reducing the number of reads and write cycles required to perform operations.
+Better performance - With streams, there is higher data processing throughput since data is processed as soon as it becomes available rather than waiting for all the data to arrive and then process it.
+Increased composability - With streams, developers can compose complex applications that interconnect data between multiple pieces of code or even across applications. This benefit allows developers to build microservices with Node.js.
+Real-time applications - Streams are essential for creating real-time applications such as video streaming or chat applications.
+How to create a readable stream
+In this section, we will look at creating a readable stream. First, let’s look at a simple example. We can start working with streams using the ‘streams’ module, a core module in Node.js. To create a readable stream, first, import the ‘stream’ module and then create an instance of the readable stream by adding the following:
+const Stream = require('stream')
+const readableStream = new Stream.Readable()
+Once the readable stream is initialized, we can send data using:
+readableStream.push('Hello World!')
+There are two types of read streams: flowing and paused.
+In flowing mode, data is read continuously and provided to the application using events from the EventEmitter. These events include
+Data event - This event is raised whenever data is available to be read by a stream.
+End event - This event is raised when the stream reaches the end of the file, and no more data is available to read.
+Error event - This event is raised when an error occurs during the read stream process. This event is also raised when using writable streams.
+Finish event - This event is raised when all data has been flushed to the underlying system.
+With the paused mode, the stream is not read continuously. Instead, the read() method of the readable stream needs to be called explicitly to receive the next chunk of data from the stream.
+Streams start out in the paused mode but can be switched to the flowing mode by following these steps:
+
+
+How to use streams in Node.js
+Mar 6th, 2022
+|
+Categories:
+
+Node.js
+Streams of data serve as a bridge between where data is stored and where it will be processed. Node.js streams are used to read and continuously write data. Streams work differently from traditional techniques that read or write data, which require the data to be read and stored in memory before being processed. For instance, to read a file, the entire file needs to be copied into memory before it can be processed adding to application latency. On the other hand, applications that use streams will read a file sequentially in chunks, where each of these chunks is processed one at a time.
+Streams provide memory efficiency and performance benefits. For example, the performance of a website that leverages streaming is better than websites that load whole files before enabling users to use them. With streams, data can be loaded on demand depending on what users need.
+This guide will explore streams in Node.js, look at how they work, and provide examples of readable and writable streams.
+What are streams?
+Streams are a fundamental component of some of the most important Node.js applications. Using streams, large data sets are divided up into smaller chunks, which are then processed one at a time, one by one. This eliminates the need to read data from storage into memory before processing it. Many libraries used in Node.js support non-blocking execution, where chunks of data are streamed as they are received.
+In Node.js, four streams are typically used:
+Readable streams are used in operations where data is read, such as reading data from a file or streaming video.
+Writable streams are used in operations where data is written, such as writing or updating data to a file.
+Duplex streams can be used to perform both read and write operations. A typical example of a duplex stream is a socket, which can be used for two-way communication, such as in a real-time chat app.
+Transform streams are duplex streams that perform transformations on the data being processed. Operations such as compression and extraction use transform streams.
+Streams offer the following advantages over working with entire sets of data:
+Efficient memory usage - With streams, large amounts of data do not need to be loaded into memory, reducing the number of reads and write cycles required to perform operations.
+Better performance - With streams, there is higher data processing throughput since data is processed as soon as it becomes available rather than waiting for all the data to arrive and then process it.
+Increased composability - With streams, developers can compose complex applications that interconnect data between multiple pieces of code or even across applications. This benefit allows developers to build microservices with Node.js.
+Real-time applications - Streams are essential for creating real-time applications such as video streaming or chat applications.
+How to create a readable stream
+In this section, we will look at creating a readable stream. First, let’s look at a simple example. We can start working with streams using the ‘streams’ module, a core module in Node.js. To create a readable stream, first, import the ‘stream’ module and then create an instance of the readable stream by adding the following:
+const Stream = require('stream')
+const readableStream = new Stream.Readable()
+Once the readable stream is initialized, we can send data using:
+readableStream.push('Hello World!')
+There are two types of read streams: flowing and paused.
+In flowing mode, data is read continuously and provided to the application using events from the EventEmitter. These events include
+Data event - This event is raised whenever data is available to be read by a stream.
+End event - This event is raised when the stream reaches the end of the file, and no more data is available to read.
+Error event - This event is raised when an error occurs during the read stream process. This event is also raised when using writable streams.
+Finish event - This event is raised when all data has been flushed to the underlying system.
+With the paused mode, the stream is not read continuously. Instead, the read() method of the readable stream needs to be called explicitly to receive the next chunk of data from the stream.
+Streams start out in the paused mode but can be switched to the flowing mode by following these steps:
+
+
+How to use streams in Node.js
+Mar 6th, 2022
+|
+Categories:
+
+Node.js
+Streams of data serve as a bridge between where data is stored and where it will be processed. Node.js streams are used to read and continuously write data. Streams work differently from traditional techniques that read or write data, which require the data to be read and stored in memory before being processed. For instance, to read a file, the entire file needs to be copied into memory before it can be processed adding to application latency. On the other hand, applications that use streams will read a file sequentially in chunks, where each of these chunks is processed one at a time.
+Streams provide memory efficiency and performance benefits. For example, the performance of a website that leverages streaming is better than websites that load whole files before enabling users to use them. With streams, data can be loaded on demand depending on what users need.
+This guide will explore streams in Node.js, look at how they work, and provide examples of readable and writable streams.
+What are streams?
+Streams are a fundamental component of some of the most important Node.js applications. Using streams, large data sets are divided up into smaller chunks, which are then processed one at a time, one by one. This eliminates the need to read data from storage into memory before processing it. Many libraries used in Node.js support non-blocking execution, where chunks of data are streamed as they are received.
+In Node.js, four streams are typically used:
+Readable streams are used in operations where data is read, such as reading data from a file or streaming video.
+Writable streams are used in operations where data is written, such as writing or updating data to a file.
+Duplex streams can be used to perform both read and write operations. A typical example of a duplex stream is a socket, which can be used for two-way communication, such as in a real-time chat app.
+Transform streams are duplex streams that perform transformations on the data being processed. Operations such as compression and extraction use transform streams.
+Streams offer the following advantages over working with entire sets of data:
+Efficient memory usage - With streams, large amounts of data do not need to be loaded into memory, reducing the number of reads and write cycles required to perform operations.
+Better performance - With streams, there is higher data processing throughput since data is processed as soon as it becomes available rather than waiting for all the data to arrive and then process it.
+Increased composability - With streams, developers can compose complex applications that interconnect data between multiple pieces of code or even across applications. This benefit allows developers to build microservices with Node.js.
+Real-time applications - Streams are essential for creating real-time applications such as video streaming or chat applications.
+How to create a readable stream
+In this section, we will look at creating a readable stream. First, let’s look at a simple example. We can start working with streams using the ‘streams’ module, a core module in Node.js. To create a readable stream, first, import the ‘stream’ module and then create an instance of the readable stream by adding the following:
+const Stream = require('stream')
+const readableStream = new Stream.Readable()
+Once the readable stream is initialized, we can send data using:
+readableStream.push('Hello World!')
+There are two types of read streams: flowing and paused.
+In flowing mode, data is read continuously and provided to the application using events from the EventEmitter. These events include
+Data event - This event is raised whenever data is available to be read by a stream.
+End event - This event is raised when the stream reaches the end of the file, and no more data is available to read.
+Error event - This event is raised when an error occurs during the read stream process. This event is also raised when using writable streams.
+Finish event - This event is raised when all data has been flushed to the underlying system.
+With the paused mode, the stream is not read continuously. Instead, the read() method of the readable stream needs to be called explicitly to receive the next chunk of data from the stream.
+Streams start out in the paused mode but can be switched to the flowing mode by following these steps:
+
+
+How to use streams in Node.js
+Mar 6th, 2022
+|
+Categories:
+
+Node.js
+Streams of data serve as a bridge between where data is stored and where it will be processed. Node.js streams are used to read and continuously write data. Streams work differently from traditional techniques that read or write data, which require the data to be read and stored in memory before being processed. For instance, to read a file, the entire file needs to be copied into memory before it can be processed adding to application latency. On the other hand, applications that use streams will read a file sequentially in chunks, where each of these chunks is processed one at a time.
+Streams provide memory efficiency and performance benefits. For example, the performance of a website that leverages streaming is better than websites that load whole files before enabling users to use them. With streams, data can be loaded on demand depending on what users need.
+This guide will explore streams in Node.js, look at how they work, and provide examples of readable and writable streams.
+What are streams?
+Streams are a fundamental component of some of the most important Node.js applications. Using streams, large data sets are divided up into smaller chunks, which are then processed one at a time, one by one. This eliminates the need to read data from storage into memory before processing it. Many libraries used in Node.js support non-blocking execution, where chunks of data are streamed as they are received.
+In Node.js, four streams are typically used:
+Readable streams are used in operations where data is read, such as reading data from a file or streaming video.
+Writable streams are used in operations where data is written, such as writing or updating data to a file.
+Duplex streams can be used to perform both read and write operations. A typical example of a duplex stream is a socket, which can be used for two-way communication, such as in a real-time chat app.
+Transform streams are duplex streams that perform transformations on the data being processed. Operations such as compression and extraction use transform streams.
+Streams offer the following advantages over working with entire sets of data:
+Efficient memory usage - With streams, large amounts of data do not need to be loaded into memory, reducing the number of reads and write cycles required to perform operations.
+Better performance - With streams, there is higher data processing throughput since data is processed as soon as it becomes available rather than waiting for all the data to arrive and then process it.
+Increased composability - With streams, developers can compose complex applications that interconnect data between multiple pieces of code or even across applications. This benefit allows developers to build microservices with Node.js.
+Real-time applications - Streams are essential for creating real-time applications such as video streaming or chat applications.
+How to create a readable stream
+In this section, we will look at creating a readable stream. First, let’s look at a simple example. We can start working with streams using the ‘streams’ module, a core module in Node.js. To create a readable stream, first, import the ‘stream’ module and then create an instance of the readable stream by adding the following:
+const Stream = require('stream')
+const readableStream = new Stream.Readable()
+Once the readable stream is initialized, we can send data using:
+readableStream.push('Hello World!')
+There are two types of read streams: flowing and paused.
+In flowing mode, data is read continuously and provided to the application using events from the EventEmitter. These events include
+Data event - This event is raised whenever data is available to be read by a stream.
+End event - This event is raised when the stream reaches the end of the file, and no more data is available to read.
+Error event - This event is raised when an error occurs during the read stream process. This event is also raised when using writable streams.
+Finish event - This event is raised when all data has been flushed to the underlying system.
+With the paused mode, the stream is not read continuously. Instead, the read() method of the readable stream needs to be called explicitly to receive the next chunk of data from the stream.
+Streams start out in the paused mode but can be switched to the flowing mode by following these steps:
+
+
+How to use streams in Node.js
+Mar 6th, 2022
+|
+Categories:
+
+Node.js
+Streams of data serve as a bridge between where data is stored and where it will be processed. Node.js streams are used to read and continuously write data. Streams work differently from traditional techniques that read or write data, which require the data to be read and stored in memory before being processed. For instance, to read a file, the entire file needs to be copied into memory before it can be processed adding to application latency. On the other hand, applications that use streams will read a file sequentially in chunks, where each of these chunks is processed one at a time.
+Streams provide memory efficiency and performance benefits. For example, the performance of a website that leverages streaming is better than websites that load whole files before enabling users to use them. With streams, data can be loaded on demand depending on what users need.
+This guide will explore streams in Node.js, look at how they work, and provide examples of readable and writable streams.
+What are streams?
+Streams are a fundamental component of some of the most important Node.js applications. Using streams, large data sets are divided up into smaller chunks, which are then processed one at a time, one by one. This eliminates the need to read data from storage into memory before processing it. Many libraries used in Node.js support non-blocking execution, where chunks of data are streamed as they are received.
+In Node.js, four streams are typically used:
+Readable streams are used in operations where data is read, such as reading data from a file or streaming video.
+Writable streams are used in operations where data is written, such as writing or updating data to a file.
+Duplex streams can be used to perform both read and write operations. A typical example of a duplex stream is a socket, which can be used for two-way communication, such as in a real-time chat app.
+Transform streams are duplex streams that perform transformations on the data being processed. Operations such as compression and extraction use transform streams.
+Streams offer the following advantages over working with entire sets of data:
+Efficient memory usage - With streams, large amounts of data do not need to be loaded into memory, reducing the number of reads and write cycles required to perform operations.
+Better performance - With streams, there is higher data processing throughput since data is processed as soon as it becomes available rather than waiting for all the data to arrive and then process it.
+Increased composability - With streams, developers can compose complex applications that interconnect data between multiple pieces of code or even across applications. This benefit allows developers to build microservices with Node.js.
+Real-time applications - Streams are essential for creating real-time applications such as video streaming or chat applications.
+How to create a readable stream
+In this section, we will look at creating a readable stream. First, let’s look at a simple example. We can start working with streams using the ‘streams’ module, a core module in Node.js. To create a readable stream, first, import the ‘stream’ module and then create an instance of the readable stream by adding the following:
+const Stream = require('stream')
+const readableStream = new Stream.Readable()
+Once the readable stream is initialized, we can send data using:
+readableStream.push('Hello World!')
+There are two types of read streams: flowing and paused.
+In flowing mode, data is read continuously and provided to the application using events from the EventEmitter. These events include
+Data event - This event is raised whenever data is available to be read by a stream.
+End event - This event is raised when the stream reaches the end of the file, and no more data is available to read.
+Error event - This event is raised when an error occurs during the read stream process. This event is also raised when using writable streams.
+Finish event - This event is raised when all data has been flushed to the underlying system.
+With the paused mode, the stream is not read continuously. Instead, the read() method of the readable stream needs to be called explicitly to receive the next chunk of data from the stream.
+Streams start out in the paused mode but can be switched to the flowing mode by following these steps:
+
+
+How to use streams in Node.js
+Mar 6th, 2022
+|
+Categories:
+
+Node.js
+Streams of data serve as a bridge between where data is stored and where it will be processed. Node.js streams are used to read and continuously write data. Streams work differently from traditional techniques that read or write data, which require the data to be read and stored in memory before being processed. For instance, to read a file, the entire file needs to be copied into memory before it can be processed adding to application latency. On the other hand, applications that use streams will read a file sequentially in chunks, where each of these chunks is processed one at a time.
+Streams provide memory efficiency and performance benefits. For example, the performance of a website that leverages streaming is better than websites that load whole files before enabling users to use them. With streams, data can be loaded on demand depending on what users need.
+This guide will explore streams in Node.js, look at how they work, and provide examples of readable and writable streams.
+What are streams?
+Streams are a fundamental component of some of the most important Node.js applications. Using streams, large data sets are divided up into smaller chunks, which are then processed one at a time, one by one. This eliminates the need to read data from storage into memory before processing it. Many libraries used in Node.js support non-blocking execution, where chunks of data are streamed as they are received.
+In Node.js, four streams are typically used:
+Readable streams are used in operations where data is read, such as reading data from a file or streaming video.
+Writable streams are used in operations where data is written, such as writing or updating data to a file.
+Duplex streams can be used to perform both read and write operations. A typical example of a duplex stream is a socket, which can be used for two-way communication, such as in a real-time chat app.
+Transform streams are duplex streams that perform transformations on the data being processed. Operations such as compression and extraction use transform streams.
+Streams offer the following advantages over working with entire sets of data:
+Efficient memory usage - With streams, large amounts of data do not need to be loaded into memory, reducing the number of reads and write cycles required to perform operations.
+Better performance - With streams, there is higher data processing throughput since data is processed as soon as it becomes available rather than waiting for all the data to arrive and then process it.
+Increased composability - With streams, developers can compose complex applications that interconnect data between multiple pieces of code or even across applications. This benefit allows developers to build microservices with Node.js.
+Real-time applications - Streams are essential for creating real-time applications such as video streaming or chat applications.
+How to create a readable stream
+In this section, we will look at creating a readable stream. First, let’s look at a simple example. We can start working with streams using the ‘streams’ module, a core module in Node.js. To create a readable stream, first, import the ‘stream’ module and then create an instance of the readable stream by adding the following:
+const Stream = require('stream')
+const readableStream = new Stream.Readable()
+Once the readable stream is initialized, we can send data using:
+readableStream.push('Hello World!')
+There are two types of read streams: flowing and paused.
+In flowing mode, data is read continuously and provided to the application using events from the EventEmitter. These events include
+Data event - This event is raised whenever data is available to be read by a stream.
+End event - This event is raised when the stream reaches the end of the file, and no more data is available to read.
+Error event - This event is raised when an error occurs during the read stream process. This event is also raised when using writable streams.
+Finish event - This event is raised when all data has been flushed to the underlying system.
+With the paused mode, the stream is not read continuously. Instead, the read() method of the readable stream needs to be called explicitly to receive the next chunk of data from the stream.
+Streams start out in the paused mode but can be switched to the flowing mode by following these steps:
+
+
+How to use streams in Node.js
+Mar 6th, 2022
+|
+Categories:
+
+Node.js
+Streams of data serve as a bridge between where data is stored and where it will be processed. Node.js streams are used to read and continuously write data. Streams work differently from traditional techniques that read or write data, which require the data to be read and stored in memory before being processed. For instance, to read a file, the entire file needs to be copied into memory before it can be processed adding to application latency. On the other hand, applications that use streams will read a file sequentially in chunks, where each of these chunks is processed one at a time.
+Streams provide memory efficiency and performance benefits. For example, the performance of a website that leverages streaming is better than websites that load whole files before enabling users to use them. With streams, data can be loaded on demand depending on what users need.
+This guide will explore streams in Node.js, look at how they work, and provide examples of readable and writable streams.
+What are streams?
+Streams are a fundamental component of some of the most important Node.js applications. Using streams, large data sets are divided up into smaller chunks, which are then processed one at a time, one by one. This eliminates the need to read data from storage into memory before processing it. Many libraries used in Node.js support non-blocking execution, where chunks of data are streamed as they are received.
+In Node.js, four streams are typically used:
+Readable streams are used in operations where data is read, such as reading data from a file or streaming video.
+Writable streams are used in operations where data is written, such as writing or updating data to a file.
+Duplex streams can be used to perform both read and write operations. A typical example of a duplex stream is a socket, which can be used for two-way communication, such as in a real-time chat app.
+Transform streams are duplex streams that perform transformations on the data being processed. Operations such as compression and extraction use transform streams.
+Streams offer the following advantages over working with entire sets of data:
+Efficient memory usage - With streams, large amounts of data do not need to be loaded into memory, reducing the number of reads and write cycles required to perform operations.
+Better performance - With streams, there is higher data processing throughput since data is processed as soon as it becomes available rather than waiting for all the data to arrive and then process it.
+Increased composability - With streams, developers can compose complex applications that interconnect data between multiple pieces of code or even across applications. This benefit allows developers to build microservices with Node.js.
+Real-time applications - Streams are essential for creating real-time applications such as video streaming or chat applications.
+How to create a readable stream
+In this section, we will look at creating a readable stream. First, let’s look at a simple example. We can start working with streams using the ‘streams’ module, a core module in Node.js. To create a readable stream, first, import the ‘stream’ module and then create an instance of the readable stream by adding the following:
+const Stream = require('stream')
+const readableStream = new Stream.Readable()
+Once the readable stream is initialized, we can send data using:
+readableStream.push('Hello World!')
+There are two types of read streams: flowing and paused.
+In flowing mode, data is read continuously and provided to the application using events from the EventEmitter. These events include
+Data event - This event is raised whenever data is available to be read by a stream.
+End event - This event is raised when the stream reaches the end of the file, and no more data is available to read.
+Error event - This event is raised when an error occurs during the read stream process. This event is also raised when using writable streams.
+Finish event - This event is raised when all data has been flushed to the underlying system.
+With the paused mode, the stream is not read continuously. Instead, the read() method of the readable stream needs to be called explicitly to receive the next chunk of data from the stream.
+Streams start out in the paused mode but can be switched to the flowing mode by following these steps:
+
+
+How to use streams in Node.js
+Mar 6th, 2022
+|
+Categories:
+
+Node.js
+Streams of data serve as a bridge between where data is stored and where it will be processed. Node.js streams are used to read and continuously write data. Streams work differently from traditional techniques that read or write data, which require the data to be read and stored in memory before being processed. For instance, to read a file, the entire file needs to be copied into memory before it can be processed adding to application latency. On the other hand, applications that use streams will read a file sequentially in chunks, where each of these chunks is processed one at a time.
+Streams provide memory efficiency and performance benefits. For example, the performance of a website that leverages streaming is better than websites that load whole files before enabling users to use them. With streams, data can be loaded on demand depending on what users need.
+This guide will explore streams in Node.js, look at how they work, and provide examples of readable and writable streams.
+What are streams?
+Streams are a fundamental component of some of the most important Node.js applications. Using streams, large data sets are divided up into smaller chunks, which are then processed one at a time, one by one. This eliminates the need to read data from storage into memory before processing it. Many libraries used in Node.js support non-blocking execution, where chunks of data are streamed as they are received.
+In Node.js, four streams are typically used:
+Readable streams are used in operations where data is read, such as reading data from a file or streaming video.
+Writable streams are used in operations where data is written, such as writing or updating data to a file.
+Duplex streams can be used to perform both read and write operations. A typical example of a duplex stream is a socket, which can be used for two-way communication, such as in a real-time chat app.
+Transform streams are duplex streams that perform transformations on the data being processed. Operations such as compression and extraction use transform streams.
+Streams offer the following advantages over working with entire sets of data:
+Efficient memory usage - With streams, large amounts of data do not need to be loaded into memory, reducing the number of reads and write cycles required to perform operations.
+Better performance - With streams, there is higher data processing throughput since data is processed as soon as it becomes available rather than waiting for all the data to arrive and then process it.
+Increased composability - With streams, developers can compose complex applications that interconnect data between multiple pieces of code or even across applications. This benefit allows developers to build microservices with Node.js.
+Real-time applications - Streams are essential for creating real-time applications such as video streaming or chat applications.
+How to create a readable stream
+In this section, we will look at creating a readable stream. First, let’s look at a simple example. We can start working with streams using the ‘streams’ module, a core module in Node.js. To create a readable stream, first, import the ‘stream’ module and then create an instance of the readable stream by adding the following:
+const Stream = require('stream')
+const readableStream = new Stream.Readable()
+Once the readable stream is initialized, we can send data using:
+readableStream.push('Hello World!')
+There are two types of read streams: flowing and paused.
+In flowing mode, data is read continuously and provided to the application using events from the EventEmitter. These events include
+Data event - This event is raised whenever data is available to be read by a stream.
+End event - This event is raised when the stream reaches the end of the file, and no more data is available to read.
+Error event - This event is raised when an error occurs during the read stream process. This event is also raised when using writable streams.
+Finish event - This event is raised when all data has been flushed to the underlying system.
+With the paused mode, the stream is not read continuously. Instead, the read() method of the readable stream needs to be called explicitly to receive the next chunk of data from the stream.
+Streams start out in the paused mode but can be switched to the flowing mode by following these steps:
+
+
+How to use streams in Node.js
+Mar 6th, 2022
+|
+Categories:
+
+Node.js
+Streams of data serve as a bridge between where data is stored and where it will be processed. Node.js streams are used to read and continuously write data. Streams work differently from traditional techniques that read or write data, which require the data to be read and stored in memory before being processed. For instance, to read a file, the entire file needs to be copied into memory before it can be processed adding to application latency. On the other hand, applications that use streams will read a file sequentially in chunks, where each of these chunks is processed one at a time.
+Streams provide memory efficiency and performance benefits. For example, the performance of a website that leverages streaming is better than websites that load whole files before enabling users to use them. With streams, data can be loaded on demand depending on what users need.
+This guide will explore streams in Node.js, look at how they work, and provide examples of readable and writable streams.
+What are streams?
+Streams are a fundamental component of some of the most important Node.js applications. Using streams, large data sets are divided up into smaller chunks, which are then processed one at a time, one by one. This eliminates the need to read data from storage into memory before processing it. Many libraries used in Node.js support non-blocking execution, where chunks of data are streamed as they are received.
+In Node.js, four streams are typically used:
+Readable streams are used in operations where data is read, such as reading data from a file or streaming video.
+Writable streams are used in operations where data is written, such as writing or updating data to a file.
+Duplex streams can be used to perform both read and write operations. A typical example of a duplex stream is a socket, which can be used for two-way communication, such as in a real-time chat app.
+Transform streams are duplex streams that perform transformations on the data being processed. Operations such as compression and extraction use transform streams.
+Streams offer the following advantages over working with entire sets of data:
+Efficient memory usage - With streams, large amounts of data do not need to be loaded into memory, reducing the number of reads and write cycles required to perform operations.
+Better performance - With streams, there is higher data processing throughput since data is processed as soon as it becomes available rather than waiting for all the data to arrive and then process it.
+Increased composability - With streams, developers can compose complex applications that interconnect data between multiple pieces of code or even across applications. This benefit allows developers to build microservices with Node.js.
+Real-time applications - Streams are essential for creating real-time applications such as video streaming or chat applications.
+How to create a readable stream
+In this section, we will look at creating a readable stream. First, let’s look at a simple example. We can start working with streams using the ‘streams’ module, a core module in Node.js. To create a readable stream, first, import the ‘stream’ module and then create an instance of the readable stream by adding the following:
+const Stream = require('stream')
+const readableStream = new Stream.Readable()
+Once the readable stream is initialized, we can send data using:
+readableStream.push('Hello World!')
+There are two types of read streams: flowing and paused.
+In flowing mode, data is read continuously and provided to the application using events from the EventEmitter. These events include
+Data event - This event is raised whenever data is available to be read by a stream.
+End event - This event is raised when the stream reaches the end of the file, and no more data is available to read.
+Error event - This event is raised when an error occurs during the read stream process. This event is also raised when using writable streams.
+Finish event - This event is raised when all data has been flushed to the underlying system.
+With the paused mode, the stream is not read continuously. Instead, the read() method of the readable stream needs to be called explicitly to receive the next chunk of data from the stream.
+Streams start out in the paused mode but can be switched to the flowing mode by following these steps:
+
+
+How to use streams in Node.js
+Mar 6th, 2022
+|
+Categories:
+
+Node.js
+Streams of data serve as a bridge between where data is stored and where it will be processed. Node.js streams are used to read and continuously write data. Streams work differently from traditional techniques that read or write data, which require the data to be read and stored in memory before being processed. For instance, to read a file, the entire file needs to be copied into memory before it can be processed adding to application latency. On the other hand, applications that use streams will read a file sequentially in chunks, where each of these chunks is processed one at a time.
+Streams provide memory efficiency and performance benefits. For example, the performance of a website that leverages streaming is better than websites that load whole files before enabling users to use them. With streams, data can be loaded on demand depending on what users need.
+This guide will explore streams in Node.js, look at how they work, and provide examples of readable and writable streams.
+What are streams?
+Streams are a fundamental component of some of the most important Node.js applications. Using streams, large data sets are divided up into smaller chunks, which are then processed one at a time, one by one. This eliminates the need to read data from storage into memory before processing it. Many libraries used in Node.js support non-blocking execution, where chunks of data are streamed as they are received.
+In Node.js, four streams are typically used:
+Readable streams are used in operations where data is read, such as reading data from a file or streaming video.
+Writable streams are used in operations where data is written, such as writing or updating data to a file.
+Duplex streams can be used to perform both read and write operations. A typical example of a duplex stream is a socket, which can be used for two-way communication, such as in a real-time chat app.
+Transform streams are duplex streams that perform transformations on the data being processed. Operations such as compression and extraction use transform streams.
+Streams offer the following advantages over working with entire sets of data:
+Efficient memory usage - With streams, large amounts of data do not need to be loaded into memory, reducing the number of reads and write cycles required to perform operations.
+Better performance - With streams, there is higher data processing throughput since data is processed as soon as it becomes available rather than waiting for all the data to arrive and then process it.
+Increased composability - With streams, developers can compose complex applications that interconnect data between multiple pieces of code or even across applications. This benefit allows developers to build microservices with Node.js.
+Real-time applications - Streams are essential for creating real-time applications such as video streaming or chat applications.
+How to create a readable stream
+In this section, we will look at creating a readable stream. First, let’s look at a simple example. We can start working with streams using the ‘streams’ module, a core module in Node.js. To create a readable stream, first, import the ‘stream’ module and then create an instance of the readable stream by adding the following:
+const Stream = require('stream')
+const readableStream = new Stream.Readable()
+Once the readable stream is initialized, we can send data using:
+readableStream.push('Hello World!')
+There are two types of read streams: flowing and paused.
+In flowing mode, data is read continuously and provided to the application using events from the EventEmitter. These events include
+Data event - This event is raised whenever data is available to be read by a stream.
+End event - This event is raised when the stream reaches the end of the file, and no more data is available to read.
+Error event - This event is raised when an error occurs during the read stream process. This event is also raised when using writable streams.
+Finish event - This event is raised when all data has been flushed to the underlying system.
+With the paused mode, the stream is not read continuously. Instead, the read() method of the readable stream needs to be called explicitly to receive the next chunk of data from the stream.
+Streams start out in the paused mode but can be switched to the flowing mode by following these steps:
+
+
+How to use streams in Node.js
+Mar 6th, 2022
+|
+Categories:
+
+Node.js
+Streams of data serve as a bridge between where data is stored and where it will be processed. Node.js streams are used to read and continuously write data. Streams work differently from traditional techniques that read or write data, which require the data to be read and stored in memory before being processed. For instance, to read a file, the entire file needs to be copied into memory before it can be processed adding to application latency. On the other hand, applications that use streams will read a file sequentially in chunks, where each of these chunks is processed one at a time.
+Streams provide memory efficiency and performance benefits. For example, the performance of a website that leverages streaming is better than websites that load whole files before enabling users to use them. With streams, data can be loaded on demand depending on what users need.
+This guide will explore streams in Node.js, look at how they work, and provide examples of readable and writable streams.
+What are streams?
+Streams are a fundamental component of some of the most important Node.js applications. Using streams, large data sets are divided up into smaller chunks, which are then processed one at a time, one by one. This eliminates the need to read data from storage into memory before processing it. Many libraries used in Node.js support non-blocking execution, where chunks of data are streamed as they are received.
+In Node.js, four streams are typically used:
+Readable streams are used in operations where data is read, such as reading data from a file or streaming video.
+Writable streams are used in operations where data is written, such as writing or updating data to a file.
+Duplex streams can be used to perform both read and write operations. A typical example of a duplex stream is a socket, which can be used for two-way communication, such as in a real-time chat app.
+Transform streams are duplex streams that perform transformations on the data being processed. Operations such as compression and extraction use transform streams.
+Streams offer the following advantages over working with entire sets of data:
+Efficient memory usage - With streams, large amounts of data do not need to be loaded into memory, reducing the number of reads and write cycles required to perform operations.
+Better performance - With streams, there is higher data processing throughput since data is processed as soon as it becomes available rather than waiting for all the data to arrive and then process it.
+Increased composability - With streams, developers can compose complex applications that interconnect data between multiple pieces of code or even across applications. This benefit allows developers to build microservices with Node.js.
+Real-time applications - Streams are essential for creating real-time applications such as video streaming or chat applications.
+How to create a readable stream
+In this section, we will look at creating a readable stream. First, let’s look at a simple example. We can start working with streams using the ‘streams’ module, a core module in Node.js. To create a readable stream, first, import the ‘stream’ module and then create an instance of the readable stream by adding the following:
+const Stream = require('stream')
+const readableStream = new Stream.Readable()
+Once the readable stream is initialized, we can send data using:
+readableStream.push('Hello World!')
+There are two types of read streams: flowing and paused.
+In flowing mode, data is read continuously and provided to the application using events from the EventEmitter. These events include
+Data event - This event is raised whenever data is available to be read by a stream.
+End event - This event is raised when the stream reaches the end of the file, and no more data is available to read.
+Error event - This event is raised when an error occurs during the read stream process. This event is also raised when using writable streams.
+Finish event - This event is raised when all data has been flushed to the underlying system.
+With the paused mode, the stream is not read continuously. Instead, the read() method of the readable stream needs to be called explicitly to receive the next chunk of data from the stream.
+Streams start out in the paused mode but can be switched to the flowing mode by following these steps:
+
+
+How to use streams in Node.js
+Mar 6th, 2022
+|
+Categories:
+
+Node.js
+Streams of data serve as a bridge between where data is stored and where it will be processed. Node.js streams are used to read and continuously write data. Streams work differently from traditional techniques that read or write data, which require the data to be read and stored in memory before being processed. For instance, to read a file, the entire file needs to be copied into memory before it can be processed adding to application latency. On the other hand, applications that use streams will read a file sequentially in chunks, where each of these chunks is processed one at a time.
+Streams provide memory efficiency and performance benefits. For example, the performance of a website that leverages streaming is better than websites that load whole files before enabling users to use them. With streams, data can be loaded on demand depending on what users need.
+This guide will explore streams in Node.js, look at how they work, and provide examples of readable and writable streams.
+What are streams?
+Streams are a fundamental component of some of the most important Node.js applications. Using streams, large data sets are divided up into smaller chunks, which are then processed one at a time, one by one. This eliminates the need to read data from storage into memory before processing it. Many libraries used in Node.js support non-blocking execution, where chunks of data are streamed as they are received.
+In Node.js, four streams are typically used:
+Readable streams are used in operations where data is read, such as reading data from a file or streaming video.
+Writable streams are used in operations where data is written, such as writing or updating data to a file.
+Duplex streams can be used to perform both read and write operations. A typical example of a duplex stream is a socket, which can be used for two-way communication, such as in a real-time chat app.
+Transform streams are duplex streams that perform transformations on the data being processed. Operations such as compression and extraction use transform streams.
+Streams offer the following advantages over working with entire sets of data:
+Efficient memory usage - With streams, large amounts of data do not need to be loaded into memory, reducing the number of reads and write cycles required to perform operations.
+Better performance - With streams, there is higher data processing throughput since data is processed as soon as it becomes available rather than waiting for all the data to arrive and then process it.
+Increased composability - With streams, developers can compose complex applications that interconnect data between multiple pieces of code or even across applications. This benefit allows developers to build microservices with Node.js.
+Real-time applications - Streams are essential for creating real-time applications such as video streaming or chat applications.
+How to create a readable stream
+In this section, we will look at creating a readable stream. First, let’s look at a simple example. We can start working with streams using the ‘streams’ module, a core module in Node.js. To create a readable stream, first, import the ‘stream’ module and then create an instance of the readable stream by adding the following:
+const Stream = require('stream')
+const readableStream = new Stream.Readable()
+Once the readable stream is initialized, we can send data using:
+readableStream.push('Hello World!')
+There are two types of read streams: flowing and paused.
+In flowing mode, data is read continuously and provided to the application using events from the EventEmitter. These events include
+Data event - This event is raised whenever data is available to be read by a stream.
+End event - This event is raised when the stream reaches the end of the file, and no more data is available to read.
+Error event - This event is raised when an error occurs during the read stream process. This event is also raised when using writable streams.
+Finish event - This event is raised when all data has been flushed to the underlying system.
+With the paused mode, the stream is not read continuously. Instead, the read() method of the readable stream needs to be called explicitly to receive the next chunk of data from the stream.
+Streams start out in the paused mode but can be switched to the flowing mode by following these steps:
+
+
+
+
